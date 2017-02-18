@@ -1,0 +1,57 @@
+version: '2'
+
+services:
+    db:
+        image: postgres:9.6.2
+        hostname: db
+        environment:
+            - POSTGRES_USER=finder
+            - POSTGRES_PASSWORD=5NgVXWxmf6VPjSgYdrCQYbUA
+            - POSTGRES_DB=keyword_finder
+        ports:
+            - "5432:5432"
+
+    redis:
+        image: redis:3.0.7
+        hostname: redis
+
+    rabbitmq:
+        image: rabbitmq:3.6.6
+        hostname: rabbitmq
+        environment:
+            - RABBITMQ_DEFAULT_USER=rabbit
+            - RABBITMQ_DEFAULT_PASS=9X7RpMujBF57AUcpfqcrpZ3X
+        ports:
+            - "5672:5672" # Node
+            - "15672:15672" # Web UI
+
+    web:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        hostname: web
+        command: ./run_web.sh
+        volumes:
+            - .:/app
+        ports:
+            - "8000:8000"
+        links:
+            - db
+            - redis
+            - rabbitmq
+        depends_on:
+            - db
+
+    worker:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        command: ./run_celery.sh
+        volumes:
+            - .:/app
+        links:
+            - db
+            - redis
+            - rabbitmq
+        depends_on:
+            - rabbitmq
