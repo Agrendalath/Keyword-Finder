@@ -1,12 +1,28 @@
 <form role="form" ng-submit="vm.submit()">
     <div class="form-group">
-        <label for="task__arguments">New Task</label>
+        <label for="task__arguments">Keywords</label>
         <textarea class="form-control"
                   id="task__arguments"
                   rows="3"
-                  placeholder="ex. www.google.com"
-                  ng-model="vm.args">
+                  placeholder="Enter keywords separated by underscore (_)."
+                  ng-model="vm.keywords">
         </textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="task__sites">File</label>
+        <input type="file"
+               class="form-control"
+               id="task__sites"
+               file-model="vm.sites"/>
+    </div>
+
+    <div class="form-group">
+        <label for="task__is_regex">Is regex?</label>
+        <input type="checkbox"
+               class="form-control"
+               id="task__is_regex"
+               ng-model="vm.is_regex"/>
     </div>
 
     <div class="form-group">

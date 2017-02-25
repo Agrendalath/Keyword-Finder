@@ -30,7 +30,12 @@
          * @memberOf keyword_finder.tasks.services.Tasks
          */
         function all() {
-            return $http.get('/api/tasks/');
+            var response = $http.get('/api/tasks/');
+            if (response.status === 403) {
+                Authentication.unauthenticate();
+                return null;
+            }
+            return response;
         }
 
         /**
@@ -40,9 +45,11 @@
          * @returns {Promise}
          * @memberOf keyword_finder.tasks.services.Tasks
          */
-        function create(args) {
+        function create(keywords, site, is_regex) {
             return $http.post('/api/tasks/', {
-                arguments: args
+                keywords: keywords,
+                site: site,
+                is_regex: is_regex
             });
         }
     }

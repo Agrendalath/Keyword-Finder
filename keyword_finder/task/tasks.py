@@ -1,8 +1,14 @@
+import re
 from functools import wraps
-from time import sleep
+
+import requests
 
 from keyword_finder.celeryconf import app
 from .models import Task
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) ' +
+                  'Chrome/39.0.2171.95 Safari/537.36'}
 
 
 def update_job(function):
@@ -28,18 +34,9 @@ def update_job(function):
 
 @app.task
 @update_job
-def power(n):
-    """Return 2 to the n'th power"""
-    # sleep(10)
-    return 2 ** n
+def find(site, keywords, is_regex):
+    if not is_regex:
+        keywords = re.escape(keywords).replace('_', '|')
 
-
-# @app.task
-# @update_job
-# def fib(n):
-#     return n
-
-# @app.task
-# @update_job
-# def find(args):
-#     pass
+    r = requests.get(site, headers=headers)
+    return ', '.join(set(re.findall(keywords, r.text)))

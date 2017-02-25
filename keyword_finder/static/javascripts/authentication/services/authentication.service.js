@@ -111,7 +111,7 @@
 
             /**
              * @name logoutSuccessFn
-             * @desc Set the authenticated account and redirect to index.
+             * @desc Set the authenticated account and redirect to index..status === 403
              */
             function logoutSuccessFn(data, status, headers, config) {
                 Authentication.unauthenticate();

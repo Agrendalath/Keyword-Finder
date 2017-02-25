@@ -9,13 +9,14 @@
         .module('keyword_finder.tasks.controllers')
         .controller('NewTaskController', NewTaskController);
 
-    NewTaskController.$inject = ['$rootScope', '$scope', 'Authentication', 'Snackbar', 'Tasks'];
+    NewTaskController.$inject = ['$rootScope', '$scope', 'Snackbar', 'Tasks'];
 
     /**
      * @namespace NewTaskController
      */
-    function NewTaskController($rootScope, $scope, Authentication, Snackbar, Tasks) {
+    function NewTaskController($rootScope, $scope, Snackbar, Tasks) {
         var vm = this;
+        var regexp = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/;
 
         vm.submit = submit;
 
@@ -27,7 +28,24 @@
         function submit() {
             $scope.closeThisDialog();
 
-            Tasks.create(vm.args).then(createTaskSuccessFn, createTaskErrorFn);
+            var fr = new FileReader();
+
+            fr.onload = function () {
+                var content = fr.result;
+                var urls = content.split('\n');
+                vm.is_regex = !!vm.is_regex;
+
+                for (var i = 0; i < urls.length; ++i) {
+                    console.debug(vm.keywords + ' ' + urls[i] + ' ' + vm.is_regex);
+                    console.debug(regexp.test(urls[i]));
+                    if (regexp.test(urls[i]))
+                        Tasks.create(vm.keywords, urls[i], vm.is_regex);
+                }
+                createTaskSuccessFn();
+            };
+
+            fr.readAsText(vm.sites, "UTF-8");
+
 
             /**
              * @name createTaskSuccessFn
