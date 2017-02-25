@@ -10,7 +10,7 @@ class TaskViewSet(viewsets.ModelViewSet):
 
     permission_classes = (permissions.IsAuthenticated,)
     filter_backends = (IsOwnerOrAdminFilterBackend,)
-    queryset = Task.objects.all()
+    queryset = Task.objects.all().order_by('-created_at')
 
     def get_serializer_class(self):
         if self.request.user.is_admin:
@@ -18,4 +18,4 @@ class TaskViewSet(viewsets.ModelViewSet):
         return TaskUserSerializer
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        serializer.save(owner=self.request.user, status="pending")

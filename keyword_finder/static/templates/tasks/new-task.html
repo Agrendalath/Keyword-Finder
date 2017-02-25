@@ -1,0 +1,15 @@
+<form role="form" ng-submit="vm.submit()">
+    <div class="form-group">
+        <label for="task__arguments">New Task</label>
+        <textarea class="form-control"
+                  id="task__arguments"
+                  rows="3"
+                  placeholder="ex. www.google.com"
+                  ng-model="vm.args">
+        </textarea>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>

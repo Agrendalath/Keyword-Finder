@@ -27,7 +27,7 @@ class Task(models.Model):
         If user changes argument, Task automatically gets 'pending' status.
         """
 
-        if self.pk is not None:
+        if self.pk:
             previous = Task.objects.get(pk=self.pk)
             if previous.arguments != self.arguments:
                 self.status = self.STATUS[0][0]

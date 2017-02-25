@@ -18,14 +18,19 @@ from django.contrib import admin
 from rest_framework import routers
 
 from task.views import TaskViewSet
-from user.views import UserViewSet
+from user.views import UserViewSet, LoginView, LogoutView
+from .views import IndexView
 
 router = routers.DefaultRouter()
 router.register(r'tasks', TaskViewSet)
 router.register(r'users', UserViewSet)
+# router.register(r'task', TaskView)
 
-urlpatterns = [
+urlpatterns = (
+    url(r'^api/users/login/$', LoginView.as_view(), name='login'),
+    url(r'^api/users/logout/$', LogoutView.as_view(), name='logout'),
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/', admin.site.urls),
-]
+    url(r'^.*$', IndexView.as_view(), name='index'),
+)

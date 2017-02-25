@@ -1,0 +1,11 @@
+<div ng-hide="vm.isAuthenticated">
+    <div class="col-sm-12 no-tasks-here">
+        <em>You have to log in to use Keyword Finder.</em>
+    </div>
+</div>
+<tasks tasks="vm.tasks" ng-show="vm.isAuthenticated && vm.tasks"></tasks>
+<a class="btn btn-primary btn-fab btn-raised mdi-content-add btn-create-new-task"
+   href="javascript:void(0)"
+   ng-show="vm.isAuthenticated"
+   ng-dialog="/static/templates/tasks/new-task.html"
+   ng-dialog-controller="NewTaskController as vm"></a>

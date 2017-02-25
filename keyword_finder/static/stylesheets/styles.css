@@ -1,0 +1,31 @@
+.no-tasks-here {
+    text-align: center;
+}
+
+.task {
+}
+
+.task__meta {
+    text-align: left;
+    padding-bottom: 19px;
+}
+
+.task__results {
+    float: right;
+    font-weight:bold;
+}
+
+.btn-create-new-task {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+
+/*.navbar-default {*/
+/*background-color: green;*/
+/*}*/
+
+/*.btn {*/
+/*background-color: green !important;*/
+/*}*/

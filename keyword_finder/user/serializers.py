@@ -55,3 +55,10 @@ class UserPasswordChangeSerializer(serializers.ModelSerializer):
         else:
             raise serializers.ValidationError({'password': 'Wrong password.'})
         return instance
+
+
+class UserLoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('email', 'password')
+        write_only_fields = ('password',)
