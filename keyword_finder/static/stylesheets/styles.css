@@ -21,6 +21,14 @@
     right: 20px;
 }
 
+.task__success {
+    color: green;
+}
+
+.task__failure {
+    color: red;
+}
+
 
 /*.navbar-default {*/
 /*background-color: green;*/

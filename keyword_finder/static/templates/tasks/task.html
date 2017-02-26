@@ -3,11 +3,14 @@
         <div class="well">
             <div class="task">
                 <div class="task">
-                    <pre>Status:<span class="task__results">{{ task.status }}</span></pre>
+                        <pre ng-if="task.status == 'succeeded'">Status:<span class="task__results task__success">{{ task.status }}</span></pre>
+                        <pre ng-if="task.status == 'failed'">Status:<span class="task__results task__failure">{{ task.status }}</span></pre>
+                        <pre ng_if="task.status == 'pending' || task.status == 'running'">Status:<span class="task__results">{{ task.status }}</span></pre>
                     <pre>Site:<span class="task__results">{{ task.site }}</span></pre>
                     <pre>Found keywords:<span class="task__results">{{ task.results }}</span></pre>
-                    <!--<pre>Creation date:<span class="task__results">{{ task.created_at }}</span></pre>
-                    <pre>Update date:<span class="task__results">{{ task.updated_at }}</span></pre>-->
+                    <pre>Creation date:<span class="task__results">{{ task.created_at }}</span></pre>
+                    <pre>Update date:<span class="task__results">{{ task.updated_at }}</span></pre>
+                    <button class="btn-danger" ng-controller="IndexController" ng-click="remove(task.url)">Delete</button>
                 </div>
             </div>
         </div>

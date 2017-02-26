@@ -18,7 +18,8 @@
     function Tasks($http) {
         var Tasks = {
             all: all,
-            create: create
+            create: create,
+            remove: remove
         };
 
         return Tasks;
@@ -51,6 +52,17 @@
                 site: site,
                 is_regex: is_regex
             });
+        }
+
+        /**
+         * @name remove
+         * @desc Delete Task.
+         * @param {string} url Task's url.
+         * @returns {Promise}
+         * @memberOf keyword_finder.tasks.services.Tasks
+         */
+        function remove(url) {
+            return $http.delete(url);
         }
     }
 })();

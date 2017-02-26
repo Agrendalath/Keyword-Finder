@@ -100,7 +100,7 @@
          * @memberOf keyword_finder.tasks.controllers.TasksController
          */
         function render(current, original) {
-            if (current !== original) {
+            if (current !== original && current.results) {
                 vm.columns = [];
 
                 for (var i = 0; i < calculateNumberOfColumns(); ++i)
@@ -112,8 +112,6 @@
                     vm.columns[column].push(current.results[i]);
                 }
             }
-
-
         }
     }
 })();

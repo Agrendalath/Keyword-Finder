@@ -18,6 +18,10 @@
         vm.isAuthenticated = Authentication.isAuthenticated();
         vm.tasks = [];
 
+        $scope.remove = function (x) {
+            Tasks.remove(x).then(Tasks.all().then(tasksSuccessFn, tasksErrorFn), tasksErrorFn);
+        };
+
         if (vm.isAuthenticated) {
             activate();
 
