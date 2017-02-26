@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
+from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token
 
 from task.views import TaskViewSet
 from user.views import UserViewSet, LoginView, LogoutView
@@ -31,6 +32,8 @@ urlpatterns = (
     url(r'^api/users/logout/$', LogoutView.as_view(), name='logout'),
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api-token-auth/', obtain_jwt_token),
+    url(r'^api-token-verify/', verify_jwt_token),
     url(r'^admin/', admin.site.urls),
     url(r'^.*$', IndexView.as_view(), name='index'),
 )

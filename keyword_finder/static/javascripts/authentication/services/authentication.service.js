@@ -75,10 +75,26 @@
          * @memberOf keyword_finder.authentication.services.Authentication
          */
         function login(email, password) {
-            return $http.post('/api/users/login/', {
-                email: email,
-                password: password
-            }).then(loginSuccessFn, loginErrorFn);
+            return $http.post("/api-token-auth/", {
+                'email': email,
+                'password': password
+            }).success(function (response) {
+                window.sessionStorage.setItem('token', response.token);
+                window.sessionStorage.setItem('email', email);
+                // $cookies.logged = true;
+                // $cookies.jwt = response.token;
+                // store.set('token', response.token);
+                // Authentication.setAuthenticatedAccount(email);
+                // $cookies.authenticatedAccount = JSON.stringify(email);
+                window.location = '/';
+            }).error(function () {
+                // $cookies.logged = false;
+                window.sessionStorage.removeItem('token');
+            });
+            // return $http.post('/api/users/login/', {
+            //     email: email,
+            //     password: password
+            // }).then(loginSuccessFn, loginErrorFn);
 
             /**
              * @name loginSuccessFn
@@ -148,7 +164,9 @@
          * @memberOf keyword_finder.authentication.services.Authentication
          */
         function isAuthenticated() {
-            return !!$cookies.authenticatedAccount;
+            // return !!$cookies.authenticatedAccount;
+            // return $cookies.logged;
+            return !!window.sessionStorage.getItem('token')
         }
 
         /**
@@ -169,7 +187,9 @@
          * @memberOf keyword_finder.authentication.services.Authentication
          */
         function unauthenticate() {
-            delete $cookies.authenticatedAccount;
+            // delete $cookies.authenticatedAccount;
+            window.sessionStorage.removeItem('token');
+            window.sessionStorage.removeItem('email');
         }
     }
 })();
