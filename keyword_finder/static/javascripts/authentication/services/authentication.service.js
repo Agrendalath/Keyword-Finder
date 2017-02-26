@@ -78,31 +78,14 @@
             return $http.post("/api-token-auth/", {
                 'email': email,
                 'password': password
-            }).success(function (response) {
-                window.sessionStorage.setItem('token', response.token);
-                window.sessionStorage.setItem('email', email);
-                // $cookies.logged = true;
-                // $cookies.jwt = response.token;
-                // store.set('token', response.token);
-                // Authentication.setAuthenticatedAccount(email);
-                // $cookies.authenticatedAccount = JSON.stringify(email);
-                window.location = '/';
-            }).error(function () {
-                // $cookies.logged = false;
-                window.sessionStorage.removeItem('token');
-            });
-            // return $http.post('/api/users/login/', {
-            //     email: email,
-            //     password: password
-            // }).then(loginSuccessFn, loginErrorFn);
+            }).then(loginSuccessFn, loginErrorFn);
 
             /**
              * @name loginSuccessFn
              * @desc Set the authenticated account and redirect to index.
              */
             function loginSuccessFn(data, status, headers, config) {
-                Authentication.setAuthenticatedAccount(data.data);
-
+                window.sessionStorage.setItem('token', data.data.token);
                 window.location = '/';
             }
 
@@ -111,6 +94,7 @@
              * @desc Show message 'You shall not pass!' to the user.
              */
             function loginErrorFn(data, status, headers, config) {
+                window.sessionStorage.removeItem('token');
                 Snackbar.show('You shall not pass!');
             }
         }
@@ -164,8 +148,6 @@
          * @memberOf keyword_finder.authentication.services.Authentication
          */
         function isAuthenticated() {
-            // return !!$cookies.authenticatedAccount;
-            // return $cookies.logged;
             return !!window.sessionStorage.getItem('token')
         }
 
@@ -187,9 +169,7 @@
          * @memberOf keyword_finder.authentication.services.Authentication
          */
         function unauthenticate() {
-            // delete $cookies.authenticatedAccount;
             window.sessionStorage.removeItem('token');
-            window.sessionStorage.removeItem('email');
         }
     }
 })();

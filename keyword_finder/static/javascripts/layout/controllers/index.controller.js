@@ -12,27 +12,18 @@
     /**
      * @namespace IndexController
      */
-    function IndexController($scope, Authentication, Tasks, Snackbar, $timeout) {
+    function IndexController($scope, Authentication, Tasks, Snackbar, $interval, $timeout, $http) {
         var vm = this;
 
         vm.isAuthenticated = Authentication.isAuthenticated();
         vm.tasks = [];
 
         $scope.remove = function (x) {
-            Tasks.remove(x).then(Tasks.all().then(tasksSuccessFn, tasksErrorFn), tasksErrorFn);
+            $http.delete(x).then(reload, tasksErrorFn);
         };
 
         if (vm.isAuthenticated) {
             activate();
-
-            $scope.reload = function () {
-                Tasks.all().then(tasksSuccessFn, tasksErrorFn);
-
-                $timeout(function () {
-                    $scope.reload();
-                }, 5000)
-            };
-            $scope.reload();
         }
 
         /**
@@ -46,6 +37,10 @@
             $scope.$on('task.created', function () {
                 Tasks.all().then(tasksSuccessFn, tasksErrorFn);
             });
+        }
+
+        function reload() {
+            window.location.reload();
         }
 
         /**

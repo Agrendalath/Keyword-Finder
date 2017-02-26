@@ -13,9 +13,9 @@
 
         <div class="collapse navbar-collapse" id="keyword_finder-nav">
             <ul class="nav navbar-nav pull-right">
-                <li ng-show="vm.email"><a href="javascript:void(0)" ng-click="vm.logout()">Logout</a></li>
-                <li ng-hide="vm.email"><a href="/login">Login</a></li>
-                <li ng-hide="vm.email"><a href="/register">Register</a></li>
+                <li ng-show="vm.logged"><a href="javascript:void(0)" ng-click="vm.logout()">Logout</a></li>
+                <li ng-hide="vm.logged"><a href="/login">Login</a></li>
+                <li ng-hide="vm.logged"><a href="/register">Register</a></li>
             </ul>
         </div> <!-- /.collapse.navbar-collapse -->
     </div> <!-- /.container-fluid -->

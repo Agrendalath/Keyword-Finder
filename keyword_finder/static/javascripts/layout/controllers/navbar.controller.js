@@ -18,6 +18,7 @@
         var vm = this;
 
         vm.logout = logout;
+        vm.logged = Authentication.isAuthenticated();
 
         /**
          * @name logout
