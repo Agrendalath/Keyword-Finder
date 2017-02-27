@@ -110,7 +110,9 @@
                     var column = approximateShortestColumn();
 
                     var notFound = current.results[i].keywords;
-                    var found = current.results[i].results.split(', ');
+                    var found = '';
+                    if (current.results[i].results)
+                        found = current.results[i].results.split(', ');
 
 
                     for (var j = 0; j < found.length; ++j)
