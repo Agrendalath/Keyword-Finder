@@ -35,7 +35,7 @@ If you want to run this server in production environment, **while running the we
 
 5. change line in Dockerfile from "8000:8000" to "80:80",
 
-6. change passwords in Dockerfile,
+6. change passwords in Dockerfile and keyword_finder/keyword_finder/settings.py,
 
 7. issue following commands:
 <pre>
