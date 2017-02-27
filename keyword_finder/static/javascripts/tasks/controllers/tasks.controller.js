@@ -109,6 +109,17 @@
                 for (i = 0; i < current.count; ++i) {
                     var column = approximateShortestColumn();
 
+                    var notFound = current.results[i].keywords;
+                    var found = current.results[i].results.split(', ');
+
+
+                    for (var j = 0; j < found.length; ++j)
+                        notFound = notFound.replace(found[j], '');
+
+                    notFound = notFound.replace(/^[_]+|[_]+$/g, '').replace(/[_]+/g, ', ');
+
+                    current.results[i].keywords = notFound;
+
                     vm.columns[column].push(current.results[i]);
                 }
             }

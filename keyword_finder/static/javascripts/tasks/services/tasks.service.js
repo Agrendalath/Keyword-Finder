@@ -31,7 +31,6 @@
          * @memberOf keyword_finder.tasks.services.Tasks
          */
         function all() {
-            console.debug("CALLED");
             var response = $http.get('/api/tasks/');
             if (response.status === 403) {
                 Authentication.unauthenticate();
