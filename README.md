@@ -14,7 +14,7 @@ After this, run following script in a separate terminal emulator:
 ./first_run.sh
 </pre>
 
-###Next runs
+### Next runs
 If you want to run Keyword Finder again, you can just type:
 <pre>
 docker-compose up
@@ -22,7 +22,7 @@ docker-compose up
 
 
 ## Production configuration
-###Deployment
+### Deployment
 If you want to run this server in production environment, **while running the web container**, you need to:
 
 1. comment out line: "DEBUG = True" in file keyword_finder/keyword_finder/settings.py,
@@ -46,6 +46,6 @@ apt-get update && apt-get install -y nginx
 cp nginx.conf /etc/nginx/sites-enabled/
 </pre>
 
-###Running server
+### Running server
 Run your production server with:
 <pre>docker-compose up --abort-on-container-exit --no-recreate</pre>
